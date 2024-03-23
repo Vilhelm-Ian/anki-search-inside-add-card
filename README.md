@@ -5,7 +5,7 @@ The add-on's development always targets the newest Anki version, which means clo
 
 To build, run `npm run build` in the `/web` subfolder.
 
-https://ankiweb.net/shared/info/572933442
+Fork of https://ankiweb.net/shared/info/572933442
 
 
 ![alt text](https://i.imgur.com/LC6Cr9r.png)
