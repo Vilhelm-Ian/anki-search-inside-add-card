@@ -55,7 +55,7 @@ class QtPrioritySlider(QWidget):
         self.slider             = QSlider(Qt.Orientation.Horizontal)
 
         if prio_default is not None and prio_default >= 0:
-            self.slider.setValue(prio_default)
+            self.slider.setValue(int(prio_default))
         else:
             self.slider.setValue(0)
         self.slider.setMinimum(0)
