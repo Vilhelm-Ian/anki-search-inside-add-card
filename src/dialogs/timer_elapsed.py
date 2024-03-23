@@ -21,14 +21,17 @@ import aqt
 import utility.misc
 import state
 import functools
-
 from ..notes import get_read_today_count
-
+import PyQt6
+from PyQt6 import QtCore
+from ..notes import get_read_today_count
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QDialog
 class TimerElapsedDialog(QDialog):
     """ Dialog that is shown after the tomato timer finished. """
 
     def __init__(self, parent):
-        QDialog.__init__(self, parent, Qt.WindowType.FramelessWindowHint)
+        QDialog.__init__(self, parent, QtCore.Qt.WindowType.FramelessWindowHint)
 
         self.setModal(True)
         self.mw     = aqt.mw
