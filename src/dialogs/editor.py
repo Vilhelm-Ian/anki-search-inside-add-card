@@ -38,6 +38,9 @@ from .url_input_dialog import URLInputDialog
 from ..markdown.extensions.fenced_code import FencedCodeExtension
 from ..markdown.extensions.def_list import DefListExtension
 from ..web.reading_modal import Reader
+import PyQt6
+from PyQt6 import QtCore
+from PyQt6.QtWidgets import QCompleter
 
 import utility.text
 import utility.misc
@@ -587,7 +590,7 @@ class CreateTab(QWidget):
         tags = get_all_tags()
         if tags:
             completer = QCompleter(tags)
-            completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+            completer.setCaseSensitivity(QtCore.Qt.CaseSensitivity.CaseInsensitive)
             self.tag.setCompleter(completer)
         tag_hbox.addWidget(self.tag)
         if self.parent.tag_prefill is not None:
