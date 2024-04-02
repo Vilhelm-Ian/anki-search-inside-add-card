@@ -29,6 +29,9 @@ import shutil
 import importlib.util
 from typing import Optional
 from pathlib import Path
+from PyQt6.QtCore import QMarginsF, Qt
+from PyQt6.QtGui import QPageSize, QPageLayout
+from PyQt6.QtPrintSupport import QPrinter
 from aqt import mw
 from aqt.qt import *
 from aqt.utils import tooltip, showInfo
@@ -339,8 +342,8 @@ def url_to_pdf(url, output_path, cb_after_finish = None):
 
     def save_pdf(finished):
         printer = QPrinter()
-        printer.setPageMargins(10, 10, 10, 10, QPrinter.Unit.Millimeter)
-        printer.setPageSize(QPrinter.A3)
+        printer.setPageMargins(QMarginsF(10, 10, 10, 10, QPageLayout.Unit.Millimeter)
+        printer.setPageSize(QPageSize())
         printer.setPageOrientation(QPageLayout.Orientation.Portrait)
         temp.page().printToPdf(output_path, printer.pageLayout())
 
