@@ -341,10 +341,12 @@ def url_to_pdf(url, output_path, cb_after_finish = None):
     temp.load(QUrl(url))
 
     def save_pdf(finished):
+        page_layout = QPageLayout()
+        page_layout.setUnits(QPageLayout.Unit.Millimeter)
+        page_layout.setMargins(QMarginsF(10, 10, 10, 10))
+        page_layout.setOrientation(QPageLayout.Orientation.Landscape)
         printer = QPrinter()
-        printer.setPageMargins(QMarginsF(10, 10, 10, 10, QPageLayout.Unit.Millimeter)
-        printer.setPageSize(QPageSize())
-        printer.setPageOrientation(QPageLayout.Orientation.Portrait)
+        printer.setPageLayout(page_layout)
         temp.page().printToPdf(output_path, printer.pageLayout())
 
     temp.loadFinished.connect(save_pdf)
