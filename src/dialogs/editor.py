@@ -40,7 +40,9 @@ from ..markdown.extensions.def_list import DefListExtension
 from ..web.reading_modal import Reader
 import PyQt6
 from PyQt6 import QtCore
-from PyQt6.QtWidgets import QCompleter
+from PyQt6.QtWidgets import QCompleter, QLabel, QHBoxLayout, QVBoxLayout
+from PyQt6.QtGui import QPixmap
+
 
 import utility.text
 import utility.misc
@@ -419,6 +421,7 @@ class CreateTab(QWidget):
         hbox.addWidget(parent.cancel)
 
         vbox = QVBoxLayout()
+        title_bar = QHBoxLayout()
 
         title_lbl = QLabel("Title")
         self.title = QLineEdit()
@@ -427,8 +430,17 @@ class CreateTab(QWidget):
         f = self.title.font()
         f.setPointSize(14)
         self.title.setFont(f)
-        vbox.addWidget(title_lbl)
-        vbox.addWidget(self.title)
+        title_bar.addWidget(title_lbl)
+        title_bar.addWidget(self.title)
+
+        pin_icon = QLabel()
+        pin_icon_pixmap = QPixmap(icons_path + "mdi--pin-outline.svg")
+        pin_icon.setPixmap(pin_icon_pixmap)
+        pin_icon.mousePressEvent = lambda a: print("hello")
+
+        title_bar.addWidget(pin_icon)
+        vbox.addLayout(title_bar)
+
 
         text_lbl = QLabel("Text [Markdown]")
         self.text = MDTextEdit()
