@@ -48,6 +48,10 @@ import utility.text
 import utility.misc
 import state
 
+# A GLOBAL VARIBALE
+KEEP_TITLE = False
+
+
 def open_editor(mw, nid):
     note = mw.col.getNote(nid)
     dialog = EditDialog(mw, note)
@@ -331,7 +335,8 @@ class NoteEditor(QDialog):
             Called after a note is created with the save_and_stay button.
             Clear the fields for the next note.
         """
-        self.create_tab.title.setText("")
+        if not KEEP_TITLE:
+            self.create_tab.title.setText("")
         self.create_tab.text.setMarkdown("")
         if self.create_tab.source.text().endswith(".pdf"):
             self.create_tab.source.setText("")
@@ -436,7 +441,11 @@ class CreateTab(QWidget):
         pin_icon = QLabel()
         pin_icon_pixmap = QPixmap(icons_path + "mdi--pin-outline.svg")
         pin_icon.setPixmap(pin_icon_pixmap)
-        pin_icon.mousePressEvent = lambda a: print("hello")
+        pin_icon.mousePressEvent = lambda a: toggle_boolean()
+
+        def toggle_boolean():
+            global KEEP_TITLE
+            KEEP_TITLE = KEEP_TITLE ^ True
 
         title_bar.addWidget(pin_icon)
         vbox.addLayout(title_bar)
