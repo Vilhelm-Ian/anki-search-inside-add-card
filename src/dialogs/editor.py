@@ -164,6 +164,7 @@ class NoteEditor(QDialog):
         self.title_prefill  = title_prefill
         self.prio_prefill   = prio_prefill
         self.dark_mode_used = state.is_nightmode()
+        self.keep_title = False
 
         open_note = Reader.current_note
         if prefill_with_opened_note and open_note is not None:
@@ -336,7 +337,8 @@ class NoteEditor(QDialog):
             Called after a note is created with the save_and_stay button.
             Clear the fields for the next note.
         """
-        self.create_tab.title.setText("")
+        if not self.keep_title:
+            self.create_tab.title.setText("")
         self.create_tab.text.setMarkdown("")
         if self.create_tab.source.text().endswith(".pdf"):
             self.create_tab.source.setText("")
@@ -434,6 +436,31 @@ class CreateTab(QWidget):
         f = self.title.font()
         f.setPointSize(14)
         self.title.setFont(f)
+        pin_icon = QLabel()
+        pin_icon_pixmap = QPixmap(icons_path + "mdi--pin-outline.svg")
+        pin_icon.setPixmap(pin_icon_pixmap)
+        pin_icon.mousePressEvent = lambda a: toggle_boolean()
+
+        def toggle_boolean():
+            self.parent.keep_title = self.parent.keep_title ^ True
+            pin_icon_pixmap = QPixmap(icons_path + "mdi--pin-outline-blue.svg") if self.parent.keep_title else  QPixmap(icons_path + "mdi--pin-outline.svg")
+            pin_icon.setPixmap(pin_icon_pixmap)
+
+        title_bar.addWidget(title_lbl)
+        title_bar.addWidget(self.title)
+
+        pin_icon = QLabel()
+        pin_icon_pixmap = QPixmap(icons_path + "mdi--pin-outline.svg")
+        pin_icon.setPixmap(pin_icon_pixmap)
+        pin_icon.mousePressEvent = lambda a: toggle_boolean()
+
+        def toggle_boolean():
+            self.parent.keep_title = self.parent.keep_title ^ True
+            pin_icon_pixmap = QPixmap(icons_path + "mdi--pin-outline-blue.svg") if self.parent.keep_title else  QPixmap(icons_path + "mdi--pin-outline.svg")
+            pin_icon.setPixmap(pin_icon_pixmap)
+
+        title_bar.addWidget(pin_icon)
+
         vbox.addWidget(title_lbl)
         vbox.addWidget(self.title)
 
