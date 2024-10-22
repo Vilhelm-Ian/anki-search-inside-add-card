@@ -47,7 +47,7 @@ import utility.misc
 import state
 
 def open_editor(mw, nid):
-    note = mw.col.getNote(nid)
+    note = mw.col.get_note(nid)
     dialog = EditDialog(mw, note)
 
 class EditDialog(QDialog):
@@ -130,6 +130,13 @@ class EditDialog(QDialog):
             self._saveAndClose()
             onsuccess()
         self.editor.saveNow(callback)
+
+    def setCentralWidget(self, a):
+        """ it dosen't work without this """
+
+    
+    def setMenuBar(self, a):
+        """ it dosen't work without this """
 
 class NoteEditor(QDialog):
     """ The editor window for non-anki notes. """
