@@ -48,12 +48,9 @@ import utility.text
 import utility.misc
 import state
 
-# A GLOBAL VARIBALE
-KEEP_TITLE = False
-
 
 def open_editor(mw, nid):
-    note = mw.col.getNote(nid)
+    note = mw.col.get_note(nid)
     dialog = EditDialog(mw, note)
 
 class EditDialog(QDialog):
@@ -137,6 +134,13 @@ class EditDialog(QDialog):
             onsuccess()
         self.editor.saveNow(callback)
 
+    def setCentralWidget(self, a):
+        """ it dosen't work without this """
+
+    
+    def setMenuBar(self, a):
+        """ it dosen't work without this """
+
 class NoteEditor(QDialog):
     """ The editor window for non-anki notes. """
 
@@ -163,6 +167,7 @@ class NoteEditor(QDialog):
         self.title_prefill  = title_prefill
         self.prio_prefill   = prio_prefill
         self.dark_mode_used = state.is_nightmode()
+        self.keep_title = False
 
         open_note = Reader.current_note
         if prefill_with_opened_note and open_note is not None:
@@ -335,7 +340,7 @@ class NoteEditor(QDialog):
             Called after a note is created with the save_and_stay button.
             Clear the fields for the next note.
         """
-        if not KEEP_TITLE:
+        if not self.keep_title:
             self.create_tab.title.setText("")
         self.create_tab.text.setMarkdown("")
         if self.create_tab.source.text().endswith(".pdf"):
@@ -444,12 +449,13 @@ class CreateTab(QWidget):
         pin_icon.mousePressEvent = lambda a: toggle_boolean()
 
         def toggle_boolean():
-            global KEEP_TITLE
-            KEEP_TITLE = KEEP_TITLE ^ True
+            self.parent.keep_title = self.parent.keep_title ^ True
+            pin_icon_pixmap = QPixmap(icons_path + "mdi--pin-outline-blue.svg") if self.parent.keep_title else  QPixmap(icons_path + "mdi--pin-outline.svg")
+            pin_icon.setPixmap(pin_icon_pixmap)
 
         title_bar.addWidget(pin_icon)
-        vbox.addLayout(title_bar)
 
+        vbox.addLayout(title_bar)
 
         text_lbl = QLabel("Text [Markdown]")
         self.text = MDTextEdit()

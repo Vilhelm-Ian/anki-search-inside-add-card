@@ -661,7 +661,7 @@ class Reader:
             if len(fields_to_prefill) > 0:
                 for f in fields_to_prefill:
                     if f in list(note.keys()):
-                        i = note._fieldOrd(f)
+                        i = note._field_index(f)
                         cls._editor.web.eval(f"SIAC.Fields.setFieldHtml({i}, `{title}`);")
         
 
