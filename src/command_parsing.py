@@ -813,7 +813,7 @@ def expanded_on_bridge_cmd(handled: Tuple[bool, Any], cmd: str, self: Any) -> Tu
                 mw.moveToState("review")
                 mw.activateWindow()
                 # workaround, as activateWindow doesn't seem to bring the main window on top on OSX
-                if isMac:
+                if is_mac:
                     mw.raise_()
             else:
                 tooltip("Failed to create filtered deck.\n"+message)
