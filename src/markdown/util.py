@@ -82,7 +82,7 @@ Constants you probably do not need to change
 """
 
 # Only load extension entry_points once.
-INSTALLED_EXTENSIONS = metadata.entry_points().get('markdown.extensions', ())
+INSTALLED_EXTENSIONS = metadata.entry_points(group="markdown", name="extensions")
 RTL_BIDI_RANGES = (
     ('\u0590', '\u07FF'),
     # Hebrew (0590-05FF), Arabic (0600-06FF),
