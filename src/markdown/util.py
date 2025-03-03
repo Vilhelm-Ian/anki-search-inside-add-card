@@ -34,6 +34,7 @@ except ImportError:
     import importlib_metadata as metadata
 
 PY37 = (3, 7) <= sys.version_info
+PY312 = (3, 12) <= sys.version_info
 
 
 # TODO: Remove deprecated variables in a future release.
@@ -82,7 +83,10 @@ Constants you probably do not need to change
 """
 
 # Only load extension entry_points once.
-INSTALLED_EXTENSIONS = metadata.entry_points(group="markdown", name="extensions")
+if PY312:
+    INSTALLED_EXTENSIONS = metadata.entry_points(group="markdown", name="extensions")
+else:
+    INSTALLED_EXTENSIONS = metadata.entry_points().get('markdown.extensions', ())
 RTL_BIDI_RANGES = (
     ('\u0590', '\u07FF'),
     # Hebrew (0590-05FF), Arabic (0600-06FF),
